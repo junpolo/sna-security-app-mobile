@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { BaseComponent } from "@core/models";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
-import { AuthService } from "./../../services/auth.service";
+import { AuthService } from "@services";
 import { UserLogin } from "../../interfaces";
 
 @Component({

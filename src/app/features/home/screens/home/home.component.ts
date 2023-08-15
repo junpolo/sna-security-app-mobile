@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { BaseComponent } from "@core/models";
-import { AuthService } from "@features/auth/services/auth.service";
+import { AuthService } from "@services";
 import { DataService, DataItem } from "../../../../shared/data.service";
 
 @Component({

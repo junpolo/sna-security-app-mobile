@@ -14,7 +14,8 @@
       "~/*": ["src/*"],
       "@/*": ["src/*"],
       "@features/*": ["src/app/features/*"],
-      "@core/*": ["src/app/core/*"]
+      "@core/*": ["src/app/core/*"],
+      "@services": ["src/app/shared/services"]
     }
   },
   "include": ["./src/**/*.ios.ts", "./src/**/*.android.ts"],

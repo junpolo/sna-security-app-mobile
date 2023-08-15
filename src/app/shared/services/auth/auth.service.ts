@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 
-import { UserLogin } from "../interfaces";
+import { UserLogin } from "../../../features/auth/interfaces";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
