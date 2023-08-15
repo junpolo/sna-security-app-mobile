@@ -1,3 +1,11 @@
-<GridLayout>
-  <Label text="Test"></Label>
-</GridLayout>
+<StackLayout [formGroup]="loginForm">
+  <TextField hint="Username or Email" formControlName="email"></TextField>
+  <TextField
+    hint="Password"
+    secure="true"
+    formControlName="password"
+  ></TextField>
+
+  <Button text="Login" (tap)="login()"></Button>
+  <Button text="Signup"></Button>
+</StackLayout>
