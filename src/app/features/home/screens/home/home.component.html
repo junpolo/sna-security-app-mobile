@@ -1,5 +1,8 @@
 <ActionBar>
   <Label text="Home"></Label>
+  <ActionItem ios.position="right" (tap)="logout()">
+    <Button *ngIf="authService.isAuthenticated" text="Logout"></Button>
+  </ActionItem>
 </ActionBar>
 
 <GridLayout>

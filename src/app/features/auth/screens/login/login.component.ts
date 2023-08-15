@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { BaseComponent } from "@core/models";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
+import { AuthService } from "./../../services/auth.service";
 import { UserLogin } from "../../interfaces";
 
 @Component({
@@ -14,7 +15,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     password: new FormControl("", Validators.required),
   });
 
-  constructor() {
+  constructor(private authService: AuthService) {
     super();
     this.page.actionBarHidden = true;
   }
@@ -22,6 +23,14 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {}
 
   login(): void {
-    console.log(this.loginForm.value);
+    const payload = this.loginForm.value as UserLogin;
+    this.authService
+      .login(payload)
+      .then((result: UserLogin) => {
+        this.navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
