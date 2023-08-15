@@ -1,11 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+import { BaseComponent } from "@core/models";
 
 @Component({
   selector: "app-login",
   templateUrl: "login.component.html",
 })
-export class LoginComponent implements OnInit {
-  constructor() {}
+export class LoginComponent extends BaseComponent implements OnInit {
+  constructor() {
+    super();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.page.actionBarHidden = true;
+  }
 }

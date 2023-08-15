@@ -13,7 +13,8 @@
     "paths": {
       "~/*": ["src/*"],
       "@/*": ["src/*"],
-      "@features/*": ["src/app/features/*"]
+      "@features/*": ["src/app/features/*"],
+      "@core/*": ["src/app/core/*"]
     }
   },
   "include": ["./src/**/*.ios.ts", "./src/**/*.android.ts"],
