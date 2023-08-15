@@ -5,7 +5,7 @@ import {
   NativeScriptRouterModule,
 } from "@nativescript/angular";
 
-import { HomeComponent } from "./screens/home.component";
+import { HomeComponent } from "./screens/home/home.component";
 
 export const routes: Routes = [{ path: "", component: HomeComponent }];
 

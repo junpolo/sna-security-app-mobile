@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { DataService, DataItem } from "../../../shared/data.service";
+import { DataService, DataItem } from "../../../../shared/data.service";
 
 @Component({
   selector: "Home",
