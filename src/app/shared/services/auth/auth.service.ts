@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
 
+import { AppSettingsService } from "./../app-settings/app-settings.service";
 import { UserLogin } from "../../../features/auth/interfaces";
 
 @Injectable({ providedIn: "root" })
-export class AuthService {
+export class AuthService extends AppSettingsService {
   private users: UserLogin[] = [
     { email: "testuser", password: "Password@123" },
   ];
 
-  isAuthenticated = false;
-
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   login(payload: UserLogin): Promise<UserLogin | void> {
     return new Promise((resolve, reject) => {

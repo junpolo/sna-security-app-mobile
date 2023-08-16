@@ -20,7 +20,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
     this.page.actionBarHidden = true;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated) {
+      this.navigate("/home");
+    }
+  }
 
   login(): void {
     const payload = this.loginForm.value as UserLogin;
