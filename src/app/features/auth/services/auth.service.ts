@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
-import { AppSettingsService } from "./../app-settings/app-settings.service";
-import { UserLogin } from "../../../features/auth/interfaces";
+import { AppSettingsService } from "@core/services";
+import { UserLogin } from "../interfaces";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends AppSettingsService {
