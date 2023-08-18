@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { BaseComponent } from "@core/models";
 import { AuthService } from "@features/auth/services";
 import { DataService, DataItem } from "../../../../shared/data.service";
+import { ApiService } from "@core/services";
+import { tap } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -13,13 +15,22 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
   constructor(
     private _itemService: DataService,
-    public authService: AuthService
+    public authService: AuthService,
+    private api: ApiService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.items = this._itemService.getItems();
+    this.getUsers();
+  }
+
+  getUsers(): void {
+    this.api.get("users").subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
   }
 
   logout(): void {
