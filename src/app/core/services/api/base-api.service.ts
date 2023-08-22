@@ -1,18 +1,15 @@
-import { HttpHeaders } from "@angular/common/http";
-import { endpoints } from "./constants/api-endpoints.constant";
-import {
-  RequestOptions,
-  HttpOptions,
-} from "./interfaces/http-options.interface";
+import { HttpHeaders, HttpParams } from "@angular/common/http";
+import { RequestOptions } from "./interfaces/http-options.interface";
 
 export abstract class BaseApiService {
   private API_URL = "http://10.0.2.2:8080/api";
 
   constructor() {}
 
-  getRequestOption({ endpoint, pathVars = {} }): RequestOptions {
+  getRequestOption({ endpoint, pathVars = {}, params = {} }): RequestOptions {
     return {
       url: this.getUrl(endpoint, pathVars),
+      params: this.getParams(params),
       headers: this.getHeaders(),
     };
   }
@@ -36,5 +33,16 @@ export abstract class BaseApiService {
     });
 
     return headers;
+  }
+
+  getParams(p: any = {}): HttpParams {
+    let params = new HttpParams();
+
+    Object.entries(p).forEach((entry: any) => {
+      const [key, value] = entry;
+      params = params.set(key, value);
+    });
+
+    return params;
   }
 }

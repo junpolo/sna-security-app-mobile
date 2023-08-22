@@ -13,7 +13,25 @@ export class ApiService extends BaseApiService {
   }
 
   get = (endpoint: string, options: HttpOptions = {}): Observable<any> => {
-    const { url, headers } = this.getRequestOption({ endpoint, ...options });
-    return this.http.get(url, { headers });
+    const { url, params, headers } = this.getRequestOption({
+      endpoint,
+      ...options,
+    });
+    return this.http.get(url, { headers, params });
+  };
+
+  post = <T>(
+    endpoint: string,
+    data: T,
+    options: HttpOptions = {}
+  ): Observable<any> => {
+    const { url, params, headers } = this.getRequestOption({
+      endpoint,
+      ...options,
+    });
+
+    const reqOptions = { params, headers };
+
+    return this.http.post(url, data, reqOptions);
   };
 }
