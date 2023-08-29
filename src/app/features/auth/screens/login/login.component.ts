@@ -3,7 +3,7 @@ import { BaseComponent } from "@core/models";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { AuthService } from "../../services";
-import { UserLogin } from "../../interfaces";
+import { User } from "../../interfaces";
 
 @Component({
   selector: "app-login",
@@ -26,11 +26,24 @@ export class LoginComponent extends BaseComponent implements OnInit {
     }
   }
 
+  register(): void {
+    const payload = this.loginForm.value as User;
+
+    this.authService
+      .register(payload)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   login(): void {
-    const payload = this.loginForm.value as UserLogin;
+    const payload = this.loginForm.value as User;
     this.authService
       .login(payload)
-      .then((result: UserLogin) => {
+      .then((result: User) => {
         this.navigate("/home");
       })
       .catch((error) => {

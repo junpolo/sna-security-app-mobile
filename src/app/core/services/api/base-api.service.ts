@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { RequestOptions } from "./interfaces/http-options.interface";
+import { endpoints } from "./constants/api-endpoints.constant";
 
 export abstract class BaseApiService {
   private API_URL = "http://10.0.2.2:8080/api";
@@ -15,7 +16,7 @@ export abstract class BaseApiService {
   }
 
   getUrl(endpoint: string, pathVars: object = {}): string {
-    const urls = [this.API_URL, endpoint];
+    const urls = [this.API_URL, endpoints[endpoint]];
 
     let url = urls.join("/");
 

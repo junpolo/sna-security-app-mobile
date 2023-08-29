@@ -4,7 +4,6 @@ import { Observable } from "rxjs";
 
 import { BaseApiService } from "./base-api.service";
 import { HttpOptions } from "./interfaces/http-options.interface";
-import { endpoints } from "./constants/api-endpoints.constant";
 
 @Injectable({ providedIn: "root" })
 export class ApiService extends BaseApiService {

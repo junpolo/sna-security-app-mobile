@@ -1,19 +1,19 @@
 import { Injectable } from "@angular/core";
 
-import { AppSettingsService } from "@core/services";
-import { UserLogin } from "../interfaces";
+import { AppSettingsService } from "@core/services/app-settings";
+import { ApiService } from "@core/services/api";
+import { User } from "../interfaces";
+import { Observable, catchError, lastValueFrom, tap } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends AppSettingsService {
-  private users: UserLogin[] = [
-    { email: "testuser", password: "Password@123" },
-  ];
+  private users: User[] = [{ email: "testuser", password: "Password@123" }];
 
-  constructor() {
+  constructor(private api: ApiService) {
     super();
   }
 
-  login(payload: UserLogin): Promise<UserLogin | void> {
+  login(payload: User): Promise<User | void> {
     return new Promise((resolve, reject) => {
       const registeredUser = this.users.find(
         (u) => u.email === payload.email && u.password === payload.password
@@ -24,6 +24,14 @@ export class AuthService extends AppSettingsService {
       this.isAuthenticated = registeredUser ? true : false;
       resolve(registeredUser);
     });
+  }
+
+  async register(user: User): Promise<any> {
+    try {
+      return await lastValueFrom(this.api.post("register", { ...user }));
+    } catch (error) {
+      throw error;
+    }
   }
 
   logout(): Promise<boolean> {

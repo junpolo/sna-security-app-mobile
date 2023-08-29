@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { BaseComponent } from "@core/models";
 import { AuthService } from "@features/auth/services";
 import { DataService, DataItem } from "../../../../shared/data.service";
-import { ApiService } from "@core/services";
+import { ApiService } from "@core/services/api";
 import { tap } from "rxjs";
 
 @Component({
