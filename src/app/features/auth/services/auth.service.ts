@@ -13,17 +13,21 @@ export class AuthService extends AppSettingsService {
     super();
   }
 
-  login(payload: User): Promise<User | void> {
-    return new Promise((resolve, reject) => {
-      const registeredUser = this.users.find(
-        (u) => u.email === payload.email && u.password === payload.password
+  async login(user: User): Promise<User | void> {
+    this.isAuthenticated = false;
+    try {
+      const validUser = await lastValueFrom(
+        this.api.post("login", { ...user })
       );
+      if (validUser) {
+        this.isAuthenticated = true;
+        return validUser;
+      }
 
-      if (!registeredUser) reject("Unauthorized Access");
-
-      this.isAuthenticated = registeredUser ? true : false;
-      resolve(registeredUser);
-    });
+      this.isAuthenticated = false;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async register(user: User): Promise<any> {
