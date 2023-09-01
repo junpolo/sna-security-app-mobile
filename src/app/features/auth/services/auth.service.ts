@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { AppSettingsService } from "@core/services/app-settings";
 import { ApiService } from "@core/services/api";
-import { User } from "../interfaces";
+import { User, UserLoginResponse } from "../interfaces";
 import { Observable, catchError, lastValueFrom, tap } from "rxjs";
 
 @Injectable({ providedIn: "root" })
@@ -13,14 +13,16 @@ export class AuthService extends AppSettingsService {
     super();
   }
 
-  async login(user: User): Promise<User | void> {
+  async login(user: User): Promise<UserLoginResponse | void> {
     this.isAuthenticated = false;
     try {
-      const validUser = await lastValueFrom(
+      const validUser: UserLoginResponse = await lastValueFrom(
         this.api.post("login", { ...user })
       );
       if (validUser) {
         this.isAuthenticated = true;
+        this.setAccessToken(validUser.accessToken);
+
         return validUser;
       }
 

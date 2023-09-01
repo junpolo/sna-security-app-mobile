@@ -3,7 +3,7 @@ import { BaseComponent } from "@core/models";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { AuthService } from "../../services";
-import { User } from "../../interfaces";
+import { User, UserLoginResponse } from "../../interfaces";
 
 @Component({
   selector: "app-login",
@@ -21,7 +21,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated) {
+    if (this.authService.isAuthenticated && this.authService.getAccessToken()) {
       this.navigate("/home");
     }
   }
@@ -43,7 +43,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     const payload = this.loginForm.value as User;
     this.authService
       .login(payload)
-      .then((result: User) => {
+      .then((result: UserLoginResponse) => {
         this.navigate("/home");
       })
       .catch((error) => {

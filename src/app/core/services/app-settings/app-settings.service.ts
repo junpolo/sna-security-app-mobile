@@ -14,4 +14,12 @@ export class AppSettingsService {
   set isAuthenticated(bool: boolean) {
     ApplicationSettings.setBoolean(AppSettings.IS_AUTHENTICATED, bool);
   }
+
+  setAccessToken(accessToken: string): void {
+    ApplicationSettings.setString(AppSettings.ACCESS_TOKEN, accessToken);
+  }
+
+  getAccessToken(): string {
+    return ApplicationSettings.getString(AppSettings.ACCESS_TOKEN);
+  }
 }
