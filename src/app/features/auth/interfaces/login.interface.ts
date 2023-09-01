@@ -6,4 +6,5 @@ export interface User {
 export interface UserLoginResponse {
   message: string;
   accessToken: string;
+  expires: string;
 }

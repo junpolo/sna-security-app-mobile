@@ -8,11 +8,11 @@ export class AppSettingsService {
   constructor() {}
 
   get isAuthenticated(): boolean {
-    return ApplicationSettings.getBoolean(AppSettings.IS_AUTHENTICATED);
-  }
+    const expires = this.getExpiration();
 
-  set isAuthenticated(bool: boolean) {
-    ApplicationSettings.setBoolean(AppSettings.IS_AUTHENTICATED, bool);
+    if (!expires) return false;
+
+    return new Date().getTime() < expires;
   }
 
   setAccessToken(accessToken: string): void {
@@ -21,5 +21,13 @@ export class AppSettingsService {
 
   getAccessToken(): string {
     return ApplicationSettings.getString(AppSettings.ACCESS_TOKEN);
+  }
+
+  setExpiration(time: number): void {
+    ApplicationSettings.setNumber(AppSettings.EXPIRATION_KEY, time * 1000);
+  }
+
+  getExpiration(): number {
+    return ApplicationSettings.getNumber(AppSettings.EXPIRATION_KEY);
   }
 }

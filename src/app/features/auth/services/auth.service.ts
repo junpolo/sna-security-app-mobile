@@ -7,26 +7,21 @@ import { Observable, catchError, lastValueFrom, tap } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends AppSettingsService {
-  private users: User[] = [{ email: "testuser", password: "Password@123" }];
-
   constructor(private api: ApiService) {
     super();
   }
 
   async login(user: User): Promise<UserLoginResponse | void> {
-    this.isAuthenticated = false;
     try {
       const validUser: UserLoginResponse = await lastValueFrom(
         this.api.post("login", { ...user })
       );
       if (validUser) {
-        this.isAuthenticated = true;
         this.setAccessToken(validUser.accessToken);
+        this.setExpiration(Number(validUser.expires));
 
         return validUser;
       }
-
-      this.isAuthenticated = false;
     } catch (error) {
       throw error;
     }
@@ -45,7 +40,8 @@ export class AuthService extends AppSettingsService {
       if (!this.isAuthenticated)
         reject("Unauthorized Access: User is not logged in");
 
-      this.isAuthenticated = this.isAuthenticated && false;
+      this.setAccessToken("");
+      this.setExpiration(0);
       resolve(true);
     });
   }
