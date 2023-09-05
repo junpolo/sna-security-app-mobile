@@ -15,6 +15,7 @@
     "@nativescript/angular": "^15.0.0",
     "@nativescript/core": "~8.5.0",
     "@nativescript/theme": "~3.0.2",
+    "nativescript-oauth2": "^3.0.10",
     "rxjs": "~7.6.0",
     "zone.js": "~0.13.0"
   },
@@ -23,6 +24,7 @@
     "@angular/cli": "^16.2.0",
     "@angular/compiler-cli": "~15.2.0",
     "@nativescript/android": "^8.5.1",
+    "@nativescript/ios": "8.5.2",
     "@nativescript/schematics": "^11.2.0",
     "@nativescript/types": "~8.5.0",
     "@nativescript/webpack": "~5.0.14",

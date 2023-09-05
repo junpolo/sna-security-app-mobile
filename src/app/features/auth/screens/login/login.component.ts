@@ -3,7 +3,8 @@ import { BaseComponent } from "@core/models";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { AuthService } from "../../services";
-import { User, UserLoginResponse } from "../../interfaces";
+import { OAuthProviders, User, UserLoginResponse } from "../../interfaces";
+import { ITnsOAuthTokenResult } from "nativescript-oauth2";
 
 @Component({
   selector: "app-login",
@@ -52,9 +53,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
       });
   }
 
-  oAuthLogin(): void {
-    this.authService.oAuthLogin().then((response) => {
-      console.log(response);
-    });
+  oAuthLogin(providerType: keyof typeof OAuthProviders): void {
+    this.authService
+      .oAuthLogin(providerType)
+      .then((response: ITnsOAuthTokenResult) => {
+        console.log(response);
+      });
   }
 }

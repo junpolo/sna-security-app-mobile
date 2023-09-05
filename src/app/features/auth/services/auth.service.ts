@@ -2,12 +2,19 @@ import { Injectable } from "@angular/core";
 
 import { AppSettingsService } from "@core/services/app-settings";
 import { ApiService } from "@core/services/api";
-import { User, UserLoginResponse } from "../interfaces";
-import { Observable, catchError, lastValueFrom, tap } from "rxjs";
+import { OAuthProviders, User, UserLoginResponse } from "../interfaces";
+import { lastValueFrom } from "rxjs";
+import { OAuthProviderService } from "./oauth-provider.service";
+import { ITnsOAuthTokenResult } from "nativescript-oauth2";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends AppSettingsService {
-  constructor(private api: ApiService) {
+  constructor(
+    private api: ApiService,
+    private oAuthService: OAuthProviderService,
+    private http: HttpClient
+  ) {
     super();
   }
 
@@ -35,8 +42,30 @@ export class AuthService extends AppSettingsService {
     }
   }
 
-  oAuthLogin(): Promise<any> {
-    return Promise.resolve({ accessToken: "LOGINTEST" });
+  oAuthLogin(providerType: keyof typeof OAuthProviders): Promise<any> {
+    const provider = OAuthProviders[providerType];
+
+    return this.oAuthService
+      .oAuthLogin(provider)
+      .then((response: ITnsOAuthTokenResult) => {
+        this.setAccessToken(response.accessToken);
+        this.setExpiration(Number(response.accessTokenExpiration));
+
+        if (providerType === "FACEBOOK") this.getFacebookUsername();
+      });
+  }
+
+  getFacebookUsername(): void {
+    const token = this.getAccessToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    this.http
+      .get("https://graph.facebook.com/v3.2/me?fields=name", { headers })
+      .subscribe((response: { name: string }) => {
+        console.log(response.name);
+      });
   }
 
   logout(): Promise<boolean> {
