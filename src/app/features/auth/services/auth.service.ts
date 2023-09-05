@@ -75,6 +75,17 @@ export class AuthService extends AppSettingsService {
       });
   }
 
+  auth0Login(): void {
+    this.auth0Client
+      .webAuthentication({
+        scope: "openid offline_access",
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((er) => console.error(er));
+  }
+
   logout(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.isAuthenticated)

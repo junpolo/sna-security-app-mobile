@@ -1,25 +1,34 @@
 // You can add your native dependencies here
 dependencies {
 //  implementation 'androidx.multidex:multidex:2.0.1'
+  implementation 'com.auth0.android:auth0:2.+'
 }
 
 android {
-  // compileSdkVersion 32
+  compileSdkVersion 32
   // buildToolsVersion "32.0.0"
   // ndkVersion ""
 
   defaultConfig {
-    minSdkVersion 17
-    // targetSdkVersion 32
+    minSdkVersion 28
+    targetSdkVersion 32
 
     // Version Information
     versionCode 1
     versionName "1.0.0"
     
     generatedDensities = []
+
+    //Auth0
+    manifestPlaceholders = [auth0Domain: "sna-security-app.us.auth0.com", auth0Scheme: "demo"]
   }
 
   aaptOptions {
     additionalParameters "--no-version-vectors"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
   }
 }

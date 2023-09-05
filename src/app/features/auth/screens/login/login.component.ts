@@ -61,5 +61,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
       });
   }
 
-  auth0Login(): void {}
+  auth0Login(): void {
+    this.authService.auth0Login();
+  }
 }
