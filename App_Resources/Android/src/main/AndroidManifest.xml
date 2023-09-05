@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="__PACKAGE__">
+<manifest 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"	
+	package="__PACKAGE__"
+	>
 
 	<supports-screens
 		android:smallScreens="true"
@@ -39,6 +42,25 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		
 		<activity android:name="com.tns.ErrorReportActivity"/>
+
+		<activity
+    		android:name="org.nativescript.auth0.RedirectActivity"
+    		tools:node="replace"
+			android:exported="true"
+			>
+			<intent-filter>
+			<action android:name="android.intent.action.VIEW" />
+
+			<category android:name="android.intent.category.DEFAULT" />
+			<category android:name="android.intent.category.BROWSABLE" />
+
+			<data
+				android:host="org.nativescript.snasecurityappmobile"
+				android:pathPrefix="/android/${applicationId}/callback"
+				android:scheme="https" />
+			</intent-filter>
+		</activity>
 	</application>
 </manifest>

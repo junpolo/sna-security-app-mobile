@@ -60,4 +60,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
         console.log(response);
       });
   }
+
+  auth0Login(): void {}
 }

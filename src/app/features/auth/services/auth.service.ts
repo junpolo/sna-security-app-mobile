@@ -1,21 +1,28 @@
 import { Injectable } from "@angular/core";
-
 import { AppSettingsService } from "@core/services/app-settings";
 import { ApiService } from "@core/services/api";
-import { OAuthProviders, User, UserLoginResponse } from "../interfaces";
 import { lastValueFrom } from "rxjs";
-import { OAuthProviderService } from "./oauth-provider.service";
 import { ITnsOAuthTokenResult } from "nativescript-oauth2";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Auth0 } from "nativescript-auth0";
+
+import { OAuthProviders, User, UserLoginResponse } from "../interfaces";
+import { OAuthProviderService } from "./oauth-provider.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends AppSettingsService {
+  private auth0Client: Auth0;
+
   constructor(
     private api: ApiService,
     private oAuthService: OAuthProviderService,
     private http: HttpClient
   ) {
     super();
+
+    const clientId = "xfgAkqZBin0Pnn2gMFFgFbnOFYOkdmDq";
+    const domain = "sna-security-app.us.auth0.com";
+    this.auth0Client = new Auth0(clientId, domain);
   }
 
   async login(user: User): Promise<UserLoginResponse | void> {
