@@ -8,3 +8,5 @@ export interface UserLoginResponse {
   accessToken: string;
   expires: string;
 }
+
+export interface TokenAndExpiry extends Omit<UserLoginResponse, "message"> {}

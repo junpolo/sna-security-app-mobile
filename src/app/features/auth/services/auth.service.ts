@@ -4,9 +4,14 @@ import { ApiService } from "@core/services/api";
 import { lastValueFrom } from "rxjs";
 import { ITnsOAuthTokenResult } from "nativescript-oauth2";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Auth0 } from "nativescript-auth0";
+import { Auth0, Credentials } from "nativescript-auth0";
 
-import { OAuthProviders, User, UserLoginResponse } from "../interfaces";
+import {
+  OAuthProviders,
+  User,
+  UserLoginResponse,
+  TokenAndExpiry,
+} from "../interfaces";
 import { OAuthProviderService } from "./oauth-provider.service";
 
 @Injectable({ providedIn: "root" })
@@ -31,8 +36,7 @@ export class AuthService extends AppSettingsService {
         this.api.post("login", { ...user })
       );
       if (validUser) {
-        this.setAccessToken(validUser.accessToken);
-        this.setExpiration(Number(validUser.expires));
+        this.setTokenAndExpiry(validUser);
 
         return validUser;
       }
@@ -49,14 +53,21 @@ export class AuthService extends AppSettingsService {
     }
   }
 
+  private setTokenAndExpiry({ accessToken, expires }: TokenAndExpiry): void {
+    this.setAccessToken(accessToken);
+    this.setExpiration(Number(expires));
+  }
+
   oAuthLogin(providerType: keyof typeof OAuthProviders): Promise<any> {
     const provider = OAuthProviders[providerType];
 
     return this.oAuthService
       .oAuthLogin(provider)
       .then((response: ITnsOAuthTokenResult) => {
-        this.setAccessToken(response.accessToken);
-        this.setExpiration(Number(response.accessTokenExpiration));
+        this.setTokenAndExpiry({
+          accessToken: response.accessToken,
+          expires: response.accessTokenExpiration.toString(),
+        });
 
         if (providerType === "FACEBOOK") this.getFacebookUsername();
       });
@@ -80,8 +91,9 @@ export class AuthService extends AppSettingsService {
       .webAuthentication({
         scope: "openid offline_access",
       })
-      .then((result) => {
-        console.log(result);
+      .then((result: Credentials) => {
+        const { accessToken, expiresAt } = result;
+        this.setTokenAndExpiry({ accessToken, expires: expiresAt.toString() });
       })
       .catch((er) => console.error(er));
   }
