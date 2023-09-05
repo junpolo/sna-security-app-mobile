@@ -35,6 +35,10 @@ export class AuthService extends AppSettingsService {
     }
   }
 
+  oAuthLogin(): Promise<any> {
+    return Promise.resolve({ accessToken: "LOGINTEST" });
+  }
+
   logout(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.isAuthenticated)

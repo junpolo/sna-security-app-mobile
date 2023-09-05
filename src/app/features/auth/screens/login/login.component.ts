@@ -8,6 +8,7 @@ import { User, UserLoginResponse } from "../../interfaces";
 @Component({
   selector: "app-login",
   templateUrl: "login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
@@ -49,5 +50,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  oAuthLogin(): void {
+    this.authService.oAuthLogin().then((response) => {
+      console.log(response);
+    });
   }
 }
