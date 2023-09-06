@@ -25,7 +25,7 @@
     "@angular-devkit/build-angular": "~15.2.0",
     "@angular/cli": "^16.2.0",
     "@angular/compiler-cli": "~15.2.0",
-    "@nativescript/android": "^8.5.1",
+    "@nativescript/android": "^8.5.2",
     "@nativescript/ios": "8.5.2",
     "@nativescript/schematics": "^11.2.0",
     "@nativescript/types": "~8.5.0",
