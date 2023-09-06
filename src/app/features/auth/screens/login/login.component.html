@@ -20,4 +20,10 @@
     class="btn facebook"
     (tap)="auth0Login()"
   ></Button>
+
+  <Button
+    text="Login via Proxy"
+    class="btn facebook"
+    (tap)="oAuthLogin('CUSTOM')"
+  ></Button>
 </StackLayout>
